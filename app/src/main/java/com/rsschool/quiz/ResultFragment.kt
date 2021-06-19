@@ -1,5 +1,6 @@
 package com.rsschool.quiz
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,17 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val result = arguments?.getInt(NUMBER_QUESTION) ?: 0
+
+        val questionList = QuestionList()
+
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT, "Your result: $result \n" +
+                    "${questionList.getQuestion(0)[0]}: " + " \n")
+            type = "text/plain"
+        }
+
         with(bindingRes) {
             resultOut.text = result.toString()
 
@@ -42,7 +54,8 @@ class ResultFragment : Fragment() {
             }
 
             share.setOnClickListener() {
-
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
             }
 
         }
