@@ -3,7 +3,9 @@ package com.rsschool.quiz
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.view.ContextThemeWrapper
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
 
@@ -24,7 +26,12 @@ class QuizFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View {
-        _binding = FragmentQuizBinding.inflate(inflater, container, false)
+        val numberTheme = arguments?.getInt(NUMBER_QUESTION) ?: 0
+
+        val currentTheme = setTheme(numberTheme)
+        val contextThemeWrapper = ContextThemeWrapper(activity, currentTheme)
+        val localInflater = inflater.cloneInContext(contextThemeWrapper)
+        _binding = FragmentQuizBinding.inflate(localInflater, container, false)
         return binding.root
     }
 
@@ -34,13 +41,10 @@ class QuizFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //Установка темы
-        //setTheme(R.style.??)
-
         super.onViewCreated(view, savedInstanceState)
-
         val numberQuestion = arguments?.getInt(NUMBER_QUESTION) ?: 0
         val value = arguments?.getInt(ID_ANSWER, -1)
+
         idAnswer = if (value == -1) null else value
         val str = "Submit"
 
@@ -148,6 +152,27 @@ class QuizFragment : Fragment() {
         }
     }
 
+    private fun setTheme(numberQuestion: Int): Int {
+        var x = 0
+        when (numberQuestion) {
+            0 -> {
+                x =  R.style.Theme_Quiz_First
+            }
+            1 -> {
+                x =  R.style.Theme_Quiz_Second
+            }
+            2 -> {
+                x =  R.style.Theme_Quiz_Third
+            }
+            3 -> {
+                x=  R.style.Theme_Quiz_Fourth
+            }
+            4 -> {
+                x =  R.style.Theme_Quiz_Fifth
+            }
+        }
+        return x
+    }
 
     companion object {
 

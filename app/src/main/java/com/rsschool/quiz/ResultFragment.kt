@@ -31,7 +31,7 @@ class ResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val result = arguments?.getInt(NUMBER_QUESTION) ?: 0
         with(bindingRes) {
-            resultLabel.text = result.toString()
+            resultOut.text = result.toString()
 
             back.setOnClickListener() {
                 (activity as MainActivity).openCastQuizFragment(0, -1)
