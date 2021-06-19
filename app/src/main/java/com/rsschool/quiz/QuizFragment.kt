@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
 
@@ -16,8 +15,6 @@ class QuizFragment : Fragment() {
 
     private val questionList = QuestionList()
     private var idAnswer: Int? = null
-
-
 
     override fun onCreateView(
 
@@ -114,8 +111,6 @@ class QuizFragment : Fragment() {
             }
         }
     }
-
-
 
     interface TransitQuizFragment {
         fun openCastQuizFragment(numberQuestion: Int, idAnswer: Int)

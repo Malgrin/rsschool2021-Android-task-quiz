@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
         for (i in correctAnswer.indices) {
             if (correctAnswer[i] == answerList[i]) {
                 k += 1
-                //result += 20
-
             }
         }
         result += ((k * 100) / (correctAnswer.size))
@@ -66,15 +64,11 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
 
     private fun setAnswerList(numberQuestion: Int, idAnswer: Int) {
         if (numberQuestion > 0 && idAnswer > 0) {
-
-            //answerList.removeAt(numberQuestion)
             if (answerList.elementAtOrNull(numberQuestion - 1) == null) {
                 answerList.add(numberQuestion - 1, idAnswer)
             } else {
                 answerList[numberQuestion - 1] = idAnswer
             }
-
-            Toast.makeText(getApplicationContext(), "$answerList", Toast.LENGTH_SHORT).show()
         } else if (numberQuestion == 0 && idAnswer == -1) {
             answerList.removeAt(4)
             answerList.removeAt(3)
