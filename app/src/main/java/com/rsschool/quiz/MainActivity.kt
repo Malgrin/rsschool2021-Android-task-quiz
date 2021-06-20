@@ -1,6 +1,7 @@
 package com.rsschool.quiz
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.ActivityMainBinding
@@ -68,11 +69,15 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
 
     private fun setAnswerList(numberQuestion: Int, idAnswer: Int) {
         if (numberQuestion > 0 && idAnswer > 0) {
-            if (answerList.elementAtOrNull(numberQuestion - 1) == null) {
+            if (answerList.elementAtOrNull(numberQuestion - 1) == null && idAnswer < 10)  {
                 answerList.add(numberQuestion - 1, idAnswer)
-            } else {
+            } else if (answerList.elementAtOrNull(numberQuestion - 1) != null && idAnswer < 10) {
                 answerList[numberQuestion - 1] = idAnswer
+            } else if (answerList.elementAtOrNull(numberQuestion + 1) == null && idAnswer > 10){
+                answerList.add(numberQuestion + 1,idAnswer - 10)
+                //numberQuestion.minus(1)
             }
+
         } else if (numberQuestion == 0 && idAnswer == -1) {
             answerList.removeAt(4)
             answerList.removeAt(3)
@@ -80,6 +85,8 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
             answerList.removeAt(1)
             answerList.removeAt(0)
         }
+
+        //Toast.makeText(applicationContext, "$answerList <--> $numberQuestion", Toast.LENGTH_SHORT).show()
     }
 
     override fun onBackPressed() {

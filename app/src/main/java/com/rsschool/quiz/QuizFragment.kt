@@ -111,8 +111,14 @@ class QuizFragment : Fragment(), BackPressed {
             }
 
             previousButton.setOnClickListener {
-                if (numberQuestion > 0) {
-                    (activity as? TransitQuizFragment)?.openCastQuizFragment(numberQuestion - 1, 0)
+                if (numberQuestion > 0 && idAnswer != null) {
+                    idAnswer?.plus(10)?.let { it1 ->
+                        (activity as? TransitQuizFragment)?.openCastQuizFragment(numberQuestion - 1,
+                            it1
+                        )
+                    }
+                } else if (idAnswer == null) {
+                    (activity as? TransitQuizFragment)?.openCastQuizFragment(numberQuestion - 1,0)
                 }
             }
 
@@ -173,8 +179,14 @@ class QuizFragment : Fragment(), BackPressed {
     }
 
     override fun onBackPressed() {
-        if (number > 0) {
-            (activity as? TransitQuizFragment)?.openCastQuizFragment(number - 1, 0)
+        if (number > 0 && idAnswer != null) {
+            idAnswer?.plus(10)?.let { it1 ->
+                (activity as? TransitQuizFragment)?.openCastQuizFragment(number - 1,
+                    it1
+                )
+            }
+        } else if (number > 0 && idAnswer == null) {
+            (activity as? TransitQuizFragment)?.openCastQuizFragment(number - 1,0)
         }
     }
 
