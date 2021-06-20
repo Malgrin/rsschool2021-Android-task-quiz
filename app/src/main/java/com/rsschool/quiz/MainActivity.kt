@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
     private fun openResultFragment(numberQuestion: Int, idAnswer: Int) {
         var result = 0
         var k = 0
+        var str = ""
         setAnswerList(numberQuestion, idAnswer)
         for (i in correctAnswer.indices) {
             if (correctAnswer[i] == answerList[i]) {
@@ -44,7 +45,12 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
         }
         result += ((k * 100) / (correctAnswer.size))
 
-        val resultFragment: Fragment = ResultFragment.newInstance(result)
+        for (i in answerList.indices) {
+            str += answerList[i]
+        }
+
+        str += result.toString()
+        val resultFragment: Fragment = ResultFragment.newInstance(str.toInt())
         val transaction = supportFragmentManager.beginTransaction()
 
         transaction.replace(R.id.container, resultFragment)
@@ -60,6 +66,10 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
     }
 
     private val correctAnswer = listOf(1, 2, 3, 4, 5)
+
+    interface TransitReList {
+        val resList: MutableList<Int>
+    }
 
 
     private fun setAnswerList(numberQuestion: Int, idAnswer: Int) {

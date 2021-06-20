@@ -1,5 +1,6 @@
 package com.rsschool.quiz
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,22 +29,45 @@ class ResultFragment : Fragment() {
         _bindingRes = null
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val result = arguments?.getInt(NUMBER_QUESTION) ?: 0
+        val strRes = result.toString()
+        var str = ""
 
         val questionList = QuestionList()
 
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(
-                Intent.EXTRA_TEXT, "Your result: $result \n" +
-                    "${questionList.getQuestion(0)[0]}: " + " \n")
-            type = "text/plain"
-        }
+
 
         with(bindingRes) {
-            resultOut.text = result.toString()
+            when (strRes.length) {
+                6 -> {
+                    resultOut.text = strRes[5].toString()
+                    str = strRes[5].toString()
+                }
+                7 -> {
+                    resultOut.text = strRes[5].toString() + strRes[6].toString()
+                    str = strRes[5].toString() + strRes[6].toString()
+                }
+                8 -> {
+                    resultOut.text = strRes[5].toString() + strRes[6].toString() + strRes[7].toString()
+                    str = strRes[5].toString() + strRes[6].toString() + strRes[7].toString()
+                }
+
+            }
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT, "Your result: " + str + "\n" +
+                            "${questionList.getQuestion(0)[0]}: " + questionList.getAnswer(0)[strRes[0].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[1]}: " + questionList.getAnswer(1)[strRes[1].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[2]}: " + questionList.getAnswer(2)[strRes[2].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[3]}: " + questionList.getAnswer(3)[strRes[3].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[4]}: " + questionList.getAnswer(4)[strRes[4].toInt() - 49] + " \n")
+                type = "text/plain"
+            }
 
             back.setOnClickListener() {
                 (activity as MainActivity).openCastQuizFragment(0, -1)
