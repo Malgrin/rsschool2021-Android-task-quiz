@@ -3,10 +3,11 @@ package com.rsschool.quiz
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.view.ContextThemeWrapper
 import android.view.ViewGroup
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
+import kotlin.system.exitProcess
 
 
 class QuizFragment : Fragment(), BackPressed {
@@ -57,6 +58,11 @@ class QuizFragment : Fragment(), BackPressed {
             optionFive.text = questionList.getAnswer(numberQuestion)[4]
 
             nextButton.isEnabled = idAnswer != null
+            previousButton.isEnabled = numberQuestion != 0
+            if (numberQuestion != 0) {
+                toolbar.setNavigationIcon(R.drawable.ic_baseline_chevron_left_24)
+            }
+            //app:navigationIcon="@drawable/ic_baseline_chevron_left_24"
             setRadioButton()
 
             radioGroup.setOnCheckedChangeListener { radioButton, checkedId ->
@@ -83,7 +89,6 @@ class QuizFragment : Fragment(), BackPressed {
             }
             if (numberQuestion == questionList.getSize() - 1) {
                 nextButton.text = str
-
             }
 
 
@@ -149,19 +154,19 @@ class QuizFragment : Fragment(), BackPressed {
         var x = 0
         when (numberQuestion) {
             0 -> {
-                x =  R.style.Theme_Quiz_First
+                x = R.style.Theme_Quiz_First
             }
             1 -> {
-                x =  R.style.Theme_Quiz_Second
+                x = R.style.Theme_Quiz_Second
             }
             2 -> {
-                x =  R.style.Theme_Quiz_Third
+                x = R.style.Theme_Quiz_Third
             }
             3 -> {
-                x=  R.style.Theme_Quiz_Fourth
+                x = R.style.Theme_Quiz_Fourth
             }
             4 -> {
-                x =  R.style.Theme_Quiz_Fifth
+                x = R.style.Theme_Quiz_Fifth
             }
         }
         return x
