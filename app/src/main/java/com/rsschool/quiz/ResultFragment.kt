@@ -57,32 +57,38 @@ class ResultFragment : Fragment() {
 
             }
 
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(
-                    Intent.EXTRA_TEXT, "Your result: " + str + "\n" +
-                            "${questionList.getQuestion(0)[0]}: " + questionList.getAnswer(0)[strRes[0].toInt() - 49] + " \n" +
-                            "${questionList.getQuestion(0)[1]}: " + questionList.getAnswer(1)[strRes[1].toInt() - 49] + " \n" +
-                            "${questionList.getQuestion(0)[2]}: " + questionList.getAnswer(2)[strRes[2].toInt() - 49] + " \n" +
-                            "${questionList.getQuestion(0)[3]}: " + questionList.getAnswer(3)[strRes[3].toInt() - 49] + " \n" +
-                            "${questionList.getQuestion(0)[4]}: " + questionList.getAnswer(4)[strRes[4].toInt() - 49] + " \n")
-                type = "text/plain"
-            }
+
 
             back.setOnClickListener() {
                 (activity as MainActivity).openCastQuizFragment(0, -1)
             }
 
             exit.setOnClickListener() {
-                exitProcess(-1)
+                exit()
             }
 
             share.setOnClickListener() {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(
+                            Intent.EXTRA_TEXT, "Your result: " + str + "\n" +
+                            "${questionList.getQuestion(0)[0]}: " + "${strRes[0].toInt() - 48}) " + questionList.getAnswer(0)[strRes[0].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[1]}: " + "${strRes[1].toInt() - 48}) " + questionList.getAnswer(1)[strRes[1].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[2]}: " + "${strRes[2].toInt() - 48}) " + questionList.getAnswer(2)[strRes[2].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[3]}: " + "${strRes[3].toInt() - 48}) " + questionList.getAnswer(3)[strRes[3].toInt() - 49] + " \n" +
+                            "${questionList.getQuestion(0)[4]}: " + "${strRes[4].toInt() - 48}) " + questionList.getAnswer(4)[strRes[4].toInt() - 49] + " \n")
+                    type = "text/plain"
+                }
                 val shareIntent = Intent.createChooser(sendIntent, null)
                 startActivity(shareIntent)
             }
 
         }
+    }
+
+    fun exit () {
+        activity?.finish()
+        exitProcess(-0)
     }
 
     companion object {
