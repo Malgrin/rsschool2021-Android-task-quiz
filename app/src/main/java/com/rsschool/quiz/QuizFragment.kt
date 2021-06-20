@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
@@ -40,6 +41,7 @@ class QuizFragment : Fragment(), BackPressed {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         super.onViewCreated(view, savedInstanceState)
         val numberQuestion = arguments?.getInt(NUMBER_QUESTION) ?: 0
         val value = arguments?.getInt(ID_ANSWER, -1)
@@ -47,6 +49,7 @@ class QuizFragment : Fragment(), BackPressed {
 
         idAnswer = if (value == -1) null else value
         val str = "Submit"
+
 
         with(binding) {
             toolbar.title = "Question " + (numberQuestion + 1)
