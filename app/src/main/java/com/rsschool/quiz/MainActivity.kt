@@ -1,13 +1,12 @@
 package com.rsschool.quiz
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
-    QuizFragment.TransitResultFragment {
+    QuizFragment.TransitResultFragment, BackPressed {
 
     private lateinit var bindingMain: ActivityMainBinding
     private val answerList = mutableListOf<Int>()
@@ -88,4 +87,12 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
         }
     }
 
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.container)
+        if (fragment is BackPressed) {
+            (fragment as BackPressed?)?.onBackPressed()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

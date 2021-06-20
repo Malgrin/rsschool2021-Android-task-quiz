@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
 
 
-class QuizFragment : Fragment() {
+class QuizFragment : Fragment(), BackPressed {
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = _binding!!
+    private var number = 0
 
     private val questionList = QuestionList()
     private var idAnswer: Int? = null
@@ -41,6 +42,7 @@ class QuizFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val numberQuestion = arguments?.getInt(NUMBER_QUESTION) ?: 0
         val value = arguments?.getInt(ID_ANSWER, -1)
+        number = numberQuestion
 
         idAnswer = if (value == -1) null else value
         val str = "Submit"
@@ -105,9 +107,12 @@ class QuizFragment : Fragment() {
 
             previousButton.setOnClickListener {
                 if (numberQuestion > 0) {
-
                     (activity as? TransitQuizFragment)?.openCastQuizFragment(numberQuestion - 1, 0)
                 }
+            }
+
+            toolbar.setNavigationOnClickListener {
+                activity?.onBackPressed()
             }
         }
     }
@@ -118,13 +123,6 @@ class QuizFragment : Fragment() {
 
     interface TransitResultFragment {
         fun openCastResultFragment(numberQuestion: Int, idAnswer: Int)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        idAnswer?.let { outState.putInt(ID_ANSWER, it) }
-
-        super.onSaveInstanceState(outState)
     }
 
     private fun setRadioButton() {
@@ -169,6 +167,12 @@ class QuizFragment : Fragment() {
         return x
     }
 
+    override fun onBackPressed() {
+        if (number > 0) {
+            (activity as? TransitQuizFragment)?.openCastQuizFragment(number - 1, 0)
+        }
+    }
+
     companion object {
 
         @JvmStatic
@@ -184,6 +188,6 @@ class QuizFragment : Fragment() {
         private const val NUMBER_QUESTION = "NUMBER_QUESTION"
         private const val ID_ANSWER = "ID_ANSWER"
     }
-
-
 }
+
+
