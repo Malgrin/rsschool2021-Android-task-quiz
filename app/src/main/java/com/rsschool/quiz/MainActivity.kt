@@ -66,11 +66,6 @@ class MainActivity : AppCompatActivity(), QuizFragment.TransitQuizFragment,
 
     private val correctAnswer = listOf(1, 2, 3, 4, 5)
 
-    interface TransitReList {
-        val resList: MutableList<Int>
-    }
-
-
     private fun setAnswerList(numberQuestion: Int, idAnswer: Int) {
         if (numberQuestion > 0 && idAnswer > 0) {
             if (answerList.elementAtOrNull(numberQuestion - 1) == null) {
